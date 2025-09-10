@@ -1,10 +1,5 @@
 const myLibrary = [];
 const bookCards = document.getElementById("bookCards");
-const div = document.createElement("div");
-const title = document.createElement("h1");
-const author = document.createElement("p");
-const pages = document.createElement("p");
-const read = document.createElement("p");
 
 function Book(title, author, pages, read) {
     if (!new.target) {
@@ -23,6 +18,11 @@ function addBookToLibrary(title, author, pages, read) {
 
 function displayLibrary(myLibrary) {
     for (books in myLibrary) {
+        let div = document.createElement("div");
+        const title = document.createElement("h1");
+        const author = document.createElement("p");
+        const pages = document.createElement("p");
+        const read = document.createElement("p");
         title.innerText = myLibrary[books].title;
         author.innerText = myLibrary[books].author;
         pages.innerText = myLibrary[books].pages;
