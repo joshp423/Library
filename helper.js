@@ -23,13 +23,25 @@ function displayLibrary(myLibrary) {
         const author = document.createElement("p");
         const pages = document.createElement("p");
         const read = document.createElement("p");
+        const removeButton = document.createElement("button");
+        const readStatusButton = document.createElement("button");
+        const buttonDiv = document.createElement("div");
+
+        readStatusButton.classList.add("readStatusButton");
+        readStatusButton.innerText = "Read Status Toggle";
+        removeButton.classList.add("removeButton");
+        removeButton.innerText = "Remove From Library"
         title.innerText = myLibrary[books].title;
-        author.innerText = myLibrary[books].author;
-        pages.innerText = myLibrary[books].pages;
+        author.innerText = `Author: ${myLibrary[books].author}`;
+        pages.innerText = `Pages: ${myLibrary[books].pages}`;
         read.innerText = myLibrary[books].read;
         bookCards.appendChild(div);
-        div.append(title, author, pages, read);
-        console.log(books.title)
+        div.append(title, author, pages, read, buttonDiv);
+        buttonDiv.append(removeButton,readStatusButton);
     }
 }
 
+addBookToLibrary("Big Willy's Boys", "Big Willy", 240, "Not read");
+addBookToLibrary("Willy Wonka", "Rold Dahl", 100, "read");
+
+displayLibrary(myLibrary);

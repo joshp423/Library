@@ -1,0 +1,19 @@
+.container {
+    display: grid;
+    grid-template: 1fr / 2fr 6fr;
+}
+
+.rightSide {
+    grid-area: 1 / 2 / 1 / 3;
+    display: grid;
+    grid-template-rows: 1fr 10fr;
+}
+
+.header {
+    grid-area: 1 / 1 / 1 / 2;
+    align-items: center;
+}
+
+.bookCards {
+    grid-area: 2 / 1 / 3 / 2;
+}
