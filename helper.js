@@ -1,5 +1,6 @@
 const myLibrary = [];
 const bookCards = document.getElementById("bookCards");
+let clicked;
 
 function Book(title, author, pages, read) {
     if (!new.target) {
@@ -40,6 +41,20 @@ function displayLibrary(myLibrary) {
         buttonDiv.append(removeButton,readStatusButton);
     }
 }
+
+const addButton = document.getElementById("addBookButton");
+addButton.addEventListener('click', function() {
+    let clicked = true;
+    const titleInput = document.createElement("input")
+    const authorInput = document.createElement("input")
+    const pageInput = document.createElement("input")
+    const readStatus = document.createElement("select")
+    titleInput.id.add("titleInput");
+    authorInput.id.add("authorInput");
+    pageInput.id.add("pageInput");
+    readStatus.id.add("readStatus");
+    
+});
 
 addBookToLibrary("Big Willy's Boys", "Big Willy", 240, "Not read");
 addBookToLibrary("Willy Wonka", "Rold Dahl", 100, "read");
