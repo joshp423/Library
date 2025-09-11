@@ -44,7 +44,6 @@ function displayLibrary(myLibrary) {
 }
 
 const addButton = document.getElementById("addBookButton");
-
 addButton.addEventListener('click', function() {
     console.log(formActive)
 
@@ -59,22 +58,29 @@ addButton.addEventListener('click', function() {
     titleDiv.classList.add("titleDiv");
     const title = document.createElement("label");
     title.innerText = "Title";
+    title.htmlFor = "titleInput"
     const titleInput = document.createElement("input");
-    titleInput.id = "titleInput";
+    titleInput.type = "text"
+    titleInput.id = "titleInput"
 
     const authorDiv = document.createElement("div");
     authorDiv.classList.add("authorDiv");
     const author = document.createElement("label");
     author.innerText = "Author";
+    author.htmlFor = "authorInput"
     const authorInput = document.createElement("input");
     authorInput.id = "authorInput";
+    authorInput.type = "text";
+
 
     const pagesDiv = document.createElement("div");
     pagesDiv.classList.add("pagesDiv");
     const pages = document.createElement("label");
     pages.innerText = "Number of Pages";
+    pages.htmlFor = "pageInput"
     const pageInput = document.createElement("input");
     pageInput.id = "pageInput";
+    pageInput.type = "number";
 
     const readDiv = document.createElement("div")
     readDiv.classList.add("readDiv")
@@ -109,11 +115,25 @@ addButton.addEventListener('click', function() {
     formContainer.style.display = "grid"
     sidebarform.style.border = "2px solid #7F6A93"
 
+    submitButton.addEventListener('click', addBook);
+    
 });
 
-
+function addBook(event) {
+    event.preventDefault();
+    const form = document.getElementById("sidebarForm");
+    myLibrary.push(new Book(form.titleInput, form.authorInput, form.pageInput, form.readStatus));
+    const existingBooks = document.getElementById("bookCards").childElementCount;
+    const bookSection = document.getElementById("bookCards");
+    let counter = 0;
+    console.log(existingBooks)
+    while (counter < existingBooks) {
+        bookSection.removeChild;
+    }
+    displayLibrary(myLibrary);
+}
 
 addBookToLibrary("Big Willy's Boys", "Big Willy", 240, "Not read");
-addBookToLibrary("Willy Wonka", "Rold Dahl", 100, "read");
+addBookToLibrary("Willy Wonka", "Roald Dahl", 100, "read");
 addBookToLibrary("Lord of the Rings: The Return of the King", "J.R.R Tolkien", 416, "Not read");
 displayLibrary(myLibrary);
