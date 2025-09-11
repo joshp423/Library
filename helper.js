@@ -32,7 +32,7 @@ function displayLibrary(myLibrary) {
         div.id =`${myLibrary[books].title}`;
         readStatusButton.classList.add("readStatusButton");
         readStatusButton.innerText = "Read Status Toggle";
-        removeButton.id = "removeButton";
+        removeButton.classList.add("removeButton");
         removeButton.innerText = "Remove From Library";
         removeButton.dataset.parent = `${myLibrary[books].title}`
         title.innerText = myLibrary[books].title;
@@ -47,7 +47,7 @@ function displayLibrary(myLibrary) {
 
 const addButton = document.getElementById("addBookButton");
 addButton.addEventListener('click', function() {
-    console.log(formActive)
+    console.log(formActive);
 
     if (formActive === true) {
         return;
@@ -55,32 +55,32 @@ addButton.addEventListener('click', function() {
 
     formActive = true;
     const sidebarform = document.getElementById("sidebarForm");
-    const formContainer = document.getElementById("formContainer")
+    const formContainer = document.getElementById("formContainer");
     const existingCheck = document.getElementById("sidebarForm").childElementCount;
     const submitButton = document.createElement("button");
     console.log(existingCheck)
     if (existingCheck === 5) {
-        formContainer.style.display = "grid"
-        sidebarform.style.border = "2px solid #7F6A93"
-        sidebarform.style.display = "grid"
+        formContainer.style.display = "grid";
+        sidebarform.style.border = "2px solid #7F6A93";
+        sidebarform.style.display = "grid";
         submitButton.addEventListener('click', addBook);
         return;
     }
 
-    const titleDiv = document.createElement("div")
+    const titleDiv = document.createElement("div");
     titleDiv.classList.add("titleDiv");
     const title = document.createElement("label");
     title.innerText = "Title";
-    title.htmlFor = "titleInput"
+    title.htmlFor = "titleInput";
     const titleInput = document.createElement("input");
-    titleInput.type = "text"
-    titleInput.id = "titleInput"
+    titleInput.type = "text";
+    titleInput.id = "titleInput";
 
     const authorDiv = document.createElement("div");
     authorDiv.classList.add("authorDiv");
     const author = document.createElement("label");
     author.innerText = "Author";
-    author.htmlFor = "authorInput"
+    author.htmlFor = "authorInput";
     const authorInput = document.createElement("input");
     authorInput.id = "authorInput";
     authorInput.type = "text";
@@ -90,12 +90,12 @@ addButton.addEventListener('click', function() {
     pagesDiv.classList.add("pagesDiv");
     const pages = document.createElement("label");
     pages.innerText = "Number of Pages";
-    pages.htmlFor = "pageInput"
+    pages.htmlFor = "pageInput";
     const pageInput = document.createElement("input");
     pageInput.id = "pageInput";
     pageInput.type = "number";
 
-    const readDiv = document.createElement("div")
+    const readDiv = document.createElement("div");
     readDiv.classList.add("readDiv")
     const readStatus = document.createElement("select");
     readStatus.id = "readStatus";
@@ -106,9 +106,9 @@ addButton.addEventListener('click', function() {
     notRead.innerText = "Not Read";
     notRead.value = "Not Read";
 
-    submitButton.innerText = "Submit"
-    submitButton.type = "Submit"
-    submitButton.id = "submitButton"
+    submitButton.innerText = "Submit";
+    submitButton.type = "Submit";
+    submitButton.id = "submitButton";
     
     sidebarform.appendChild(titleDiv);
     titleDiv.append(title, titleInput);
@@ -122,14 +122,14 @@ addButton.addEventListener('click', function() {
     sidebarform.appendChild(readDiv);
     readDiv.appendChild(readStatus);
     readStatus.append(isRead, notRead);
-    sidebarform.appendChild(submitButton)
+    sidebarform.appendChild(submitButton);
 
-    formContainer.style.display = "grid"
-    sidebarform.style.border = "2px solid #7F6A93"
-    sidebarform.style.display = "grid"
+    formContainer.style.display = "grid";
+    sidebarform.style.border = "2px solid #7F6A93";
+    sidebarform.style.display = "grid";
 
     submitButton.addEventListener('click', addBook);
-    
+
 });
 
 function addBook(event) {
@@ -137,24 +137,24 @@ function addBook(event) {
     const title = document.getElementById("titleInput");
     const author = document.getElementById("authorInput");
     const pages = document.getElementById("pageInput");
-    const read = document.getElementById("readStatus")
+    const read = document.getElementById("readStatus");
     if (title.value === ""){
         alert("Please enter a title");
         return;
     }
-    console.log(title.value, author.value, pages.value, read.value)
+    console.log(title.value, author.value, pages.value, read.value);
     addBookToLibrary(title.value, author.value, pages.value, read.value);
     const existingBooks = document.getElementById("bookCards").childElementCount;
     const bookSection = document.getElementById("bookCards");
     let counter = 0;
-    console.log(existingBooks)
+    console.log(existingBooks);
     while (counter < existingBooks) {
         bookSection.removeChild(bookSection.firstChild);
         counter ++;
     }
-    const form = document.getElementById("sidebarForm")
+    const form = document.getElementById("sidebarForm");
     form.style.display = "none";
-    console.log(myLibrary)
+    console.log(myLibrary);
     displayLibrary(myLibrary);
     formActive = false;
     title.value = "";
@@ -162,16 +162,21 @@ function addBook(event) {
     pages.value = "";
 }
 
-
-
 addBookToLibrary("Big Willy's Boys", "Big Willy", 240, "Not read");
-addBookToLibrary("Willy Wonka", "Roald Dahl", 100, "read");
+addBookToLibrary("Willy Wonka", "Roald Dahl", 100, "Read");
 addBookToLibrary("Lord of the Rings: The Return of the King", "J.R.R Tolkien", 416, "Not read");
 displayLibrary(myLibrary);
 
-const removeButton = document.getElementById("removeButton")
-removeButton.addEventListener('click', function() {
-    const remove = document.getElementById(removeButton.dataset.parent)
-    const parent = remove.parentNode;
-    parent.removeChild(remove);
-})
+function removeButtons() {
+    const removeButtons = document.querySelectorAll(".removeButton");
+    removeButtons.forEach(button => {
+        button.addEventListener("click", function() {
+            const remove = document.getElementById(button.dataset.parent);
+            const parent = remove.parentNode;
+            parent.removeChild(remove);
+        });
+    });
+};
+
+removeButtons()
+
