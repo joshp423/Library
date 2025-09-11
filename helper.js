@@ -1,6 +1,6 @@
 const myLibrary = [];
 const bookCards = document.getElementById("bookCards");
-let clicked = false;
+let formActive = false;
 
 function Book(title, author, pages, read) {
     if (!new.target) {
@@ -19,7 +19,7 @@ function addBookToLibrary(title, author, pages, read) {
 
 function displayLibrary(myLibrary) {
     for (books in myLibrary) {
-        let div = document.createElement("div");
+        const div = document.createElement("div");
         const title = document.createElement("h1");
         const author = document.createElement("p");
         const pages = document.createElement("p");
@@ -27,6 +27,7 @@ function displayLibrary(myLibrary) {
         const removeButton = document.createElement("button");
         const readStatusButton = document.createElement("button");
         const buttonDiv = document.createElement("div");
+        const hr = document.createElement("hr");
 
         readStatusButton.classList.add("readStatusButton");
         readStatusButton.innerText = "Read Status Toggle";
@@ -44,11 +45,13 @@ function displayLibrary(myLibrary) {
 
 const addButton = document.getElementById("addBookButton");
 
-addButton.addEventListener('click', function(clicked) {
-    if (clicked === true) {
+addButton.addEventListener('click', function() {
+    console.log(formActive)
+
+    if (formActive === true) {
         return;
     }
-    clicked = true;
+    formActive = true;
     const sidebarform = document.getElementById("sidebarForm");
     const formContainer = document.getElementById("formContainer")
 
@@ -104,6 +107,7 @@ addButton.addEventListener('click', function(clicked) {
     sidebarform.appendChild(submitButton)
 
     formContainer.style.display = "grid"
+    sidebarform.style.border = "2px solid #7F6A93"
 
 });
 
@@ -111,5 +115,5 @@ addButton.addEventListener('click', function(clicked) {
 
 addBookToLibrary("Big Willy's Boys", "Big Willy", 240, "Not read");
 addBookToLibrary("Willy Wonka", "Rold Dahl", 100, "read");
-
+addBookToLibrary("Lord of the Rings: The Return of the King", "J.R.R Tolkien", 416, "Not read");
 displayLibrary(myLibrary);
