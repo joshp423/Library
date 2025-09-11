@@ -37,7 +37,7 @@
     padding-right: 2%;
     background-color: #9DB5B2;
     display: grid;
-    grid-template: repeat(auto-fill, minmax(20%, 1fr)) / repeat(3, 1fr);
+    grid-template: repeat(auto-fill, minmax(20%, 1fr)) / repeat(3, minmax(20%, 1fr));
     gap:2%;
 }
 

@@ -29,10 +29,12 @@ function displayLibrary(myLibrary) {
         const buttonDiv = document.createElement("div");
         const hr = document.createElement("hr");
 
+        div.id =`${myLibrary[books].title}`;
         readStatusButton.classList.add("readStatusButton");
         readStatusButton.innerText = "Read Status Toggle";
-        removeButton.classList.add("removeButton");
-        removeButton.innerText = "Remove From Library"
+        removeButton.id = "removeButton";
+        removeButton.innerText = "Remove From Library";
+        removeButton.dataset.parent = `${myLibrary[books].title}`
         title.innerText = myLibrary[books].title;
         author.innerText = `Author: ${myLibrary[books].author}`;
         pages.innerText = `Pages: ${myLibrary[books].pages}`;
@@ -50,9 +52,20 @@ addButton.addEventListener('click', function() {
     if (formActive === true) {
         return;
     }
+
     formActive = true;
     const sidebarform = document.getElementById("sidebarForm");
     const formContainer = document.getElementById("formContainer")
+    const existingCheck = document.getElementById("sidebarForm").childElementCount;
+    const submitButton = document.createElement("button");
+    console.log(existingCheck)
+    if (existingCheck === 5) {
+        formContainer.style.display = "grid"
+        sidebarform.style.border = "2px solid #7F6A93"
+        sidebarform.style.display = "grid"
+        submitButton.addEventListener('click', addBook);
+        return;
+    }
 
     const titleDiv = document.createElement("div")
     titleDiv.classList.add("titleDiv");
@@ -93,7 +106,6 @@ addButton.addEventListener('click', function() {
     notRead.innerText = "Not Read";
     notRead.value = "Not Read";
 
-    const submitButton = document.createElement("button");
     submitButton.innerText = "Submit"
     submitButton.type = "Submit"
     submitButton.id = "submitButton"
@@ -114,6 +126,7 @@ addButton.addEventListener('click', function() {
 
     formContainer.style.display = "grid"
     sidebarform.style.border = "2px solid #7F6A93"
+    sidebarform.style.display = "grid"
 
     submitButton.addEventListener('click', addBook);
     
@@ -121,19 +134,44 @@ addButton.addEventListener('click', function() {
 
 function addBook(event) {
     event.preventDefault();
-    const form = document.getElementById("sidebarForm");
-    myLibrary.push(new Book(form.titleInput, form.authorInput, form.pageInput, form.readStatus));
+    const title = document.getElementById("titleInput");
+    const author = document.getElementById("authorInput");
+    const pages = document.getElementById("pageInput");
+    const read = document.getElementById("readStatus")
+    if (title.value === ""){
+        alert("Please enter a title");
+        return;
+    }
+    console.log(title.value, author.value, pages.value, read.value)
+    addBookToLibrary(title.value, author.value, pages.value, read.value);
     const existingBooks = document.getElementById("bookCards").childElementCount;
     const bookSection = document.getElementById("bookCards");
     let counter = 0;
     console.log(existingBooks)
     while (counter < existingBooks) {
-        bookSection.removeChild;
+        bookSection.removeChild(bookSection.firstChild);
+        counter ++;
     }
+    const form = document.getElementById("sidebarForm")
+    form.style.display = "none";
+    console.log(myLibrary)
     displayLibrary(myLibrary);
+    formActive = false;
+    title.value = "";
+    author.value = "";
+    pages.value = "";
 }
+
+
 
 addBookToLibrary("Big Willy's Boys", "Big Willy", 240, "Not read");
 addBookToLibrary("Willy Wonka", "Roald Dahl", 100, "read");
 addBookToLibrary("Lord of the Rings: The Return of the King", "J.R.R Tolkien", 416, "Not read");
 displayLibrary(myLibrary);
+
+const removeButton = document.getElementById("removeButton")
+removeButton.addEventListener('click', function() {
+    const remove = document.getElementById(removeButton.dataset.parent)
+    const parent = remove.parentNode;
+    parent.removeChild(remove);
+})
