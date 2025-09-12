@@ -27,11 +27,11 @@ function displayLibrary(myLibrary) {
         const removeButton = document.createElement("button");
         const readStatusButton = document.createElement("button");
         const buttonDiv = document.createElement("div");
-        const hr = document.createElement("hr");
 
         div.id =`${myLibrary[books].title}`;
         readStatusButton.classList.add("readStatusButton");
         readStatusButton.innerText = "Read Status Toggle";
+        readStatusButton.dataset.parent = `${myLibrary[books].title}`
         removeButton.classList.add("removeButton");
         removeButton.innerText = "Remove From Library";
         removeButton.dataset.parent = `${myLibrary[books].title}`
@@ -39,10 +39,13 @@ function displayLibrary(myLibrary) {
         author.innerText = `Author: ${myLibrary[books].author}`;
         pages.innerText = `Pages: ${myLibrary[books].pages}`;
         read.innerText = myLibrary[books].read;
+        read.classList.add("readStatus")
         bookCards.appendChild(div);
         div.append(title, author, pages, read, buttonDiv);
         buttonDiv.append(removeButton,readStatusButton);
     }
+    removeButtons()
+    readStatusToggle()
 }
 
 const addButton = document.getElementById("addBookButton");
@@ -174,9 +177,32 @@ function removeButtons() {
             const remove = document.getElementById(button.dataset.parent);
             const parent = remove.parentNode;
             parent.removeChild(remove);
+            let indexDelete = myLibrary.findIndex(book => book.title === remove.id);
+            console.log(remove.id);
+            if (indexDelete !== -1) {
+                myLibrary.splice(indexDelete, 1);
+            }
+            console.log(myLibrary);
         });
     });
 };
 
-removeButtons()
+function readStatusToggle() {
+    const toggleButtons = document.querySelectorAll(".readStatusButton");
+    toggleButtons.forEach(button => {
+        button.addEventListener("click", function() {
+            const parentData = document.getElementById(button.dataset.parent);
+            const parent = parentData.parentNode;
+            let readValue = parentData.querySelector(".readStatus");
+            console.log(readValue.innerText, parent, parentData);
+            if  (readValue.innerText === "Read") {
+                readValue.innerText = "Not Read";
+            }
+            else {
+                readValue.innerText = "Read";
+            }
+        });
+    });
+};
+
 
