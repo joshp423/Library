@@ -165,8 +165,8 @@ function addBook(event) {
     pages.value = "";
 }
 
-addBookToLibrary("Big Willy's Boys", "Big Willy", 240, "Not read");
-addBookToLibrary("Willy Wonka", "Roald Dahl", 100, "Read");
+addBookToLibrary("The Very Hungry Caterpillar", "Eric Carle", 22, "Not read");
+addBookToLibrary("Charlie and the Chocolate Factory", "Roald Dahl", 100, "Read");
 addBookToLibrary("Lord of the Rings: The Return of the King", "J.R.R Tolkien", 416, "Not read");
 displayLibrary(myLibrary);
 
