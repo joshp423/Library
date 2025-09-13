@@ -13,12 +13,46 @@ function Book(title, author, pages, read) {
     this.id = crypto.randomUUID();
 }
 
+bookCards.addEventListener("click", function (event) {
+    const target = event.target;
+
+    if (target.classList.contains("removeButton")) {
+        const bookId = target.dataset.parent;
+        const bookIndex = myLibrary.findIndex(book => book.title === bookId);
+        if (bookIndex !== -1) {
+            myLibrary.splice(bookIndex, 1);
+        }
+        const card = document.getElementById(bookId);
+        card.remove();
+    }
+
+    if (target.classList.contains("readStatusButton")) {
+        const parentData = document.getElementById(target.dataset.parent);
+            let indexDelete = myLibrary.findIndex(book => book.title === parentData.id);
+            if (myLibrary[indexDelete].read === "Read") {
+                myLibrary[indexDelete].read = "Not Read";
+            }
+            else {
+                myLibrary[indexDelete].read = "Read";
+            }
+
+            let readValue = parentData.querySelector(".readStatus");
+            if  (readValue.innerText === "Read") {
+                readValue.innerText = "Not Read";
+            }
+            else {
+                readValue.innerText = "Read";
+            }
+    }
+});
+
 function addBookToLibrary(title, author, pages, read) {
     myLibrary.push(new Book(title, author, pages, read));
 }
 
 function displayLibrary(myLibrary) {
-    for (books in myLibrary) {
+    for (book in myLibrary) {
+
         const div = document.createElement("div");
         const title = document.createElement("h1");
         const author = document.createElement("p");
@@ -28,24 +62,23 @@ function displayLibrary(myLibrary) {
         const readStatusButton = document.createElement("button");
         const buttonDiv = document.createElement("div");
 
-        div.id =`${myLibrary[books].title}`;
+        div.id =`${myLibrary[book].title}`;
         readStatusButton.classList.add("readStatusButton");
         readStatusButton.innerText = "Read Status Toggle";
-        readStatusButton.dataset.parent = `${myLibrary[books].title}`
+        readStatusButton.dataset.parent = `${myLibrary[book].title}`
         removeButton.classList.add("removeButton");
         removeButton.innerText = "Remove From Library";
-        removeButton.dataset.parent = `${myLibrary[books].title}`
-        title.innerText = myLibrary[books].title;
-        author.innerText = `Author: ${myLibrary[books].author}`;
-        pages.innerText = `Pages: ${myLibrary[books].pages}`;
-        read.innerText = myLibrary[books].read;
+        removeButton.dataset.parent = `${myLibrary[book].title}`
+        title.innerText = myLibrary[book].title;
+        author.innerText = `Author: ${myLibrary[book].author}`;
+        pages.innerText = `Pages: ${myLibrary[book].pages}`;
+        read.innerText = myLibrary[book].read;
         read.classList.add("readStatus")
         bookCards.appendChild(div);
         div.append(title, author, pages, read, buttonDiv);
         buttonDiv.append(removeButton,readStatusButton);
-    }
-    removeButtons()
-    readStatusToggle()
+        
+    }  
 }
 
 const addButton = document.getElementById("addBookButton");
@@ -132,6 +165,7 @@ addButton.addEventListener('click', function() {
 
 });
 
+
 function addBook(event) {
     event.preventDefault();
     const title = document.getElementById("titleInput");
@@ -163,37 +197,4 @@ addBookToLibrary("The Very Hungry Caterpillar", "Eric Carle", 22, "Not read");
 addBookToLibrary("Charlie and the Chocolate Factory", "Roald Dahl", 100, "Read");
 addBookToLibrary("Lord of the Rings: The Return of the King", "J.R.R Tolkien", 416, "Not read");
 displayLibrary(myLibrary);
-
-function removeButtons() {
-    const removeButtons = document.querySelectorAll(".removeButton");
-    removeButtons.forEach(button => {
-        button.addEventListener("click", function() {
-            const remove = document.getElementById(button.dataset.parent);
-            const parent = remove.parentNode;
-            parent.removeChild(remove);
-            let indexDelete = myLibrary.findIndex(book => book.title === remove.id);
-            if (indexDelete !== -1) {
-                myLibrary.splice(indexDelete, 1);
-            }
-        });
-    });
-};
-
-function readStatusToggle() {
-    const toggleButtons = document.querySelectorAll(".readStatusButton");
-    toggleButtons.forEach(button => {
-        button.addEventListener("click", function() {
-            const parentData = document.getElementById(button.dataset.parent);
-            const parent = parentData.parentNode;
-            let readValue = parentData.querySelector(".readStatus");
-            if  (readValue.innerText === "Read") {
-                readValue.innerText = "Not Read";
-            }
-            else {
-                readValue.innerText = "Read";
-            }
-        });
-    });
-};
-
 
