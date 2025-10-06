@@ -112,6 +112,7 @@ addButton.addEventListener('click', function() {
     const titleInput = document.createElement("input");
     titleInput.type = "text";
     titleInput.id = "titleInput";
+    titleInput.required = true;
 
     const authorDiv = document.createElement("div");
     authorDiv.classList.add("authorDiv");
@@ -176,10 +177,14 @@ function addBook(event) {
     const author = document.getElementById("authorInput");
     const pages = document.getElementById("pageInput");
     const read = document.getElementById("readStatus");
-    if (title.value === ""){
+    if (title.validity.valueMissing) {
         alert("Please enter a title");
         return;
     }
+    // if (title.value === ""){
+    //     alert("Please enter a title");
+    //     return;
+    // }
     addBookToLibrary(title.value, author.value, pages.value, read.value);
     const existingBooks = document.getElementById("bookCards").childElementCount;
     const bookSection = document.getElementById("bookCards");
